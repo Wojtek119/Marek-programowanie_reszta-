@@ -1,0 +1,32 @@
+Jezyk C++
+Wojciech Rybak
+Co oznacza C++:
+Język skryptowy do stron WWW
+Wersja języka C z dodatkami obiektowymi
+System operacyjny
+Baza danych
+b
+Kto stworzył język C++:
+Dennis Ritchie
+Bjarne Stroustrup
+Guido van Rossum
+James Gosling
+b
+Co oznacza kompilacja w C++:
+Wykonanie programu bezpośrednio z kodu źródłowego
+Tworzenie interfejsu graficznego
+Usuwanie błędów automatycznie
+Tłumaczenie kodu na język maszynowy
+d
+Jakie rozszerzenie ma plik źródłowy C++:
+.cpp
+.exe
+.html
+.php
+a
+Co robi instrukcja cout w C++:
+Wczytuje dane z pliku
+Kompiluje program
+Wypisuje dane na ekran
+Usuwa zmienne
+c
