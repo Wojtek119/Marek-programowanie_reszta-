@@ -1,0 +1,410 @@
+using System;
+using System.Reflection;
+
+namespace Szpital
+{
+    class Pacjent
+    {
+        public string Imie;
+        public string Nazwisko;
+        public int Wiek;
+        public string Oddzial;
+        public double Temperatura;
+        public int Cisnienie;
+
+        public Pacjent(string imie, string nazwisko, int wiek, string oddzial, double temperatura, int cisnienie)
+        {
+            this.Imie = imie;
+            this.Nazwisko = nazwisko;
+            this.Wiek = wiek;
+            this.Oddzial = oddzial;
+            this.Temperatura = temperatura;
+            this.Cisnienie = cisnienie;
+        }
+
+        public void pokazInfo()
+        { 
+            Console.WriteLine("Imie: " + Imie);
+            Console.WriteLine("Nazwisko: " + Nazwisko);
+            Console.WriteLine("Wiek: " + Wiek);
+        }
+
+        public bool CzyWymagaKontroli()
+        {
+            if (Temperatura > 38 || Cisnienie > 140)
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Pacjent> pacjenci = new List<Pacjent>();
+
+            // ==========================================
+            // 10 PACJENTÓW
+            // ==========================================
+
+            pacjenci.Add(new Pacjent(
+                "Jan", "Kowalski", 45, "Kardiologia", 36.6, 130));
+
+            pacjenci.Add(new Pacjent(
+                "Anna", "Nowak", 72, "Kardiologia", 37.2, 145));
+
+            pacjenci.Add(new Pacjent(
+                "Piotr", "Wiśniewski", 30, "Chirurgia", 38.5, 135));
+
+            pacjenci.Add(new Pacjent(
+                "Katarzyna", "Wójcik", 68, "Neurologia", 36.8, 125));
+
+            pacjenci.Add(new Pacjent(
+                "Marek", "Kamiński", 55, "Chirurgia", 39.1, 150));
+
+            pacjenci.Add(new Pacjent(
+                "Ewa", "Lewandowska", 24, "Pediatria", 37.0, 120));
+
+            pacjenci.Add(new Pacjent(
+                "Tomasz", "Zieliński", 66, "Kardiologia", 36.5, 138));
+
+            pacjenci.Add(new Pacjent(
+                "Maria", "Szymańska", 80, "Neurologia", 38.2, 155));
+
+            pacjenci.Add(new Pacjent(
+                "Adam", "Dąbrowski", 41, "Chirurgia", 37.5, 142));
+
+            pacjenci.Add(new Pacjent(
+                "Julia", "Kozłowska", 19, "Pediatria", 36.4, 118));
+
+
+            // ==========================================
+            // MENU
+            // ==========================================
+
+            string wybor = "";
+
+            while (wybor != "x")
+            {
+                Console.Clear();
+
+                Console.WriteLine("======================================");
+                Console.WriteLine("       SYSTEM INFORMACJI SZPITALA");
+                Console.WriteLine("======================================");
+                Console.WriteLine("1. Wyświetl dane wszystkich pacjentów");
+                Console.WriteLine("2. Wyświetl pacjentów z temperaturą powyżej 38°C");
+                Console.WriteLine("3. Wyświetl pacjentów powyżej 65 lat");
+                Console.WriteLine("4. Wyświetl pacjenta z najwyższą temperaturą");
+                Console.WriteLine("5. Oblicz średni wiek wszystkich pacjentów");
+                Console.WriteLine("6. Policz pacjentów na podanym oddziale");
+                Console.WriteLine("7. Wyświetl pacjentów z podanego oddziału");
+                Console.WriteLine("8. Wyświetl pacjentów z ciśnieniem powyżej 140");
+                Console.WriteLine("9. Wyświetl pacjentów wymagających kontroli");
+                Console.WriteLine("10. Dodaj pacjenta");
+                Console.WriteLine("x. Zakończ program");
+                Console.WriteLine("======================================");
+
+                Console.Write("Wybierz opcję: ");
+                wybor = Console.ReadLine();
+
+                switch (wybor)
+                {
+                    // ==================================
+                    // 1. WSZYSCY PACJENCI
+                    // ==================================
+
+                    case "1":
+
+                        Console.Clear();
+                        Console.WriteLine("--- WSZYSCY PACJENCI ---");
+                        Console.WriteLine();
+
+                        foreach (Pacjent pacjent in pacjenci)
+                        {
+                            pacjent.pokazInfo();
+                        }
+
+                        break;
+
+
+                    // ==================================
+                    // 2. TEMPERATURA POWYŻEJ 38
+                    // ==================================
+
+                    case "2":
+
+                        Console.Clear();
+                        Console.WriteLine("--- PACJENCI Z TEMPERATURĄ POWYŻEJ 38°C ---");
+                        Console.WriteLine();
+
+                        foreach (Pacjent pacjent in pacjenci)
+                        {
+                            if (pacjent.Temperatura > 38)
+                            {
+                                pacjent.pokazInfo();
+                            }
+                        }
+
+                        break;
+
+
+                    // ==================================
+                    // 3. WIEK POWYŻEJ 65
+                    // ==================================
+
+                    case "3":
+
+                        Console.Clear();
+                        Console.WriteLine("--- PACJENCI POWYŻEJ 65 LAT ---");
+                        Console.WriteLine();
+
+                        foreach (Pacjent pacjent in pacjenci)
+                        {
+                            if (pacjent.Wiek > 65)
+                            {
+                                pacjent.pokazInfo();
+                            }
+                        }
+
+                        break;
+
+
+                    // ==================================
+                    // 4. NAJWYŻSZA TEMPERATURA
+                    // ==================================
+
+                    case "4":
+
+                        Console.Clear();
+                        Console.WriteLine("--- PACJENT Z NAJWYŻSZĄ TEMPERATURĄ ---");
+                        Console.WriteLine();
+
+                        Pacjent najcieplejszy = pacjenci[0];
+
+                        foreach (Pacjent pacjent in pacjenci)
+                        {
+                            if (pacjent.Temperatura > najcieplejszy.Temperatura)
+                            {
+                                najcieplejszy = pacjent;
+                            }
+                        }
+
+                        najcieplejszy.pokazInfo();
+
+                        break;
+
+
+                    // ==================================
+                    // 5. ŚREDNI WIEK
+                    // ==================================
+
+                    case "5":
+
+                        Console.Clear();
+                        Console.WriteLine("--- ŚREDNI WIEK PACJENTÓW ---");
+                        Console.WriteLine();
+
+                        int sumaWieku = 0;
+
+                        foreach (Pacjent pacjent in pacjenci)
+                        {
+                            sumaWieku += pacjent.Wiek;
+                        }
+
+                        double sredniWiek =
+                            (double)sumaWieku / pacjenci.Count;
+
+                        Console.WriteLine(
+                            $"Średni wiek pacjentów: {sredniWiek:F2}"
+                        );
+
+                        break;
+
+
+                    // ==================================
+                    // 6. LICZBA PACJENTÓW NA ODDZIALE
+                    // ==================================
+
+                    case "6":
+
+                        Console.Clear();
+                        Console.WriteLine("--- LICZBA PACJENTÓW NA ODDZIALE ---");
+                        Console.WriteLine();
+
+                        Console.Write("Podaj nazwę oddziału: ");
+                        string oddzialDoPoliczenia = Console.ReadLine();
+
+                        int liczbaPacjentow = 0;
+
+                        foreach (Pacjent pacjent in pacjenci)
+                        {
+                            if (pacjent.Oddzial.ToLower() ==
+                                oddzialDoPoliczenia.ToLower())
+                            {
+                                liczbaPacjentow++;
+                            }
+                        }
+
+                        Console.WriteLine();
+                        Console.WriteLine(
+                            $"Na oddziale {oddzialDoPoliczenia} " +
+                            $"znajduje się {liczbaPacjentow} pacjentów."
+                        );
+
+                        break;
+
+
+                    // ==================================
+                    // 7. PACJENCI Z PODANEGO ODDZIAŁU
+                    // ==================================
+
+                    case "7":
+
+                        Console.Clear();
+                        Console.WriteLine("--- PACJENCI Z PODANEGO ODDZIAŁU ---");
+                        Console.WriteLine();
+
+                        Console.Write("Podaj nazwę oddziału: ");
+                        string podanyOddzial = Console.ReadLine();
+
+                        Console.WriteLine();
+
+                        foreach (Pacjent pacjent in pacjenci)
+                        {
+                            if (pacjent.Oddzial.ToLower() ==
+                                podanyOddzial.ToLower())
+                            {
+                                pacjent.pokazInfo();
+                            }
+                        }
+
+                        break;
+
+
+                    // ==================================
+                    // 8. CIŚNIENIE POWYŻEJ 140
+                    // ==================================
+
+                    case "8":
+
+                        Console.Clear();
+                        Console.WriteLine("--- CIŚNIENIE POWYŻEJ 140 ---");
+                        Console.WriteLine();
+
+                        foreach (Pacjent pacjent in pacjenci)
+                        {
+                            if (pacjent.Cisnienie > 140)
+                            {
+                                pacjent.pokazInfo();
+                            }
+                        }
+
+                        break;
+
+
+                    // ==================================
+                    // 9. PACJENCI WYMAGAJĄCY KONTROLI
+                    // ==================================
+
+                    case "9":
+
+                        Console.Clear();
+                        Console.WriteLine("--- PACJENCI WYMAGAJĄCY KONTROLI ---");
+                        Console.WriteLine();
+
+                        foreach (Pacjent pacjent in pacjenci)
+                        {
+                            if (pacjent.CzyWymagaKontroli())
+                            {
+                                pacjent.pokazInfo();
+                            }
+                        }
+
+                        break;
+
+
+                    // ==================================
+                    // 10. DODAWANIE PACJENTA Z KLAWIATURY
+                    // ==================================
+
+                    case "10":
+
+                        Console.Clear();
+                        Console.WriteLine("--- DODAWANIE PACJENTA ---");
+                        Console.WriteLine();
+
+                        Console.Write("Podaj imię: ");
+                        string imie = Console.ReadLine();
+
+                        Console.Write("Podaj nazwisko: ");
+                        string nazwisko = Console.ReadLine();
+
+                        Console.Write("Podaj wiek: ");
+                        int wiek = int.Parse(Console.ReadLine());
+
+                        Console.Write("Podaj oddział: ");
+                        string oddzial = Console.ReadLine();
+
+                        Console.Write("Podaj temperaturę: ");
+                        double temperatura = double.Parse(Console.ReadLine());
+
+                        Console.Write("Podaj ciśnienie skurczowe: ");
+                        int cisnienie = int.Parse(Console.ReadLine());
+
+                        Pacjent nowyPacjent = new Pacjent(
+                            imie,
+                            nazwisko,
+                            wiek,
+                            oddzial,
+                            temperatura,
+                            cisnienie
+                        );
+
+                        pacjenci.Add(nowyPacjent);
+
+                        Console.WriteLine();
+                        Console.WriteLine("Pacjent został dodany.");
+
+                        break;
+
+
+                    // ==================================
+                    // X. KONIEC PROGRAMU
+                    // ==================================
+
+                    case "x":
+
+                        Console.WriteLine();
+                        Console.WriteLine("Zamykanie programu...");
+
+                        break;
+
+
+                    // ==================================
+                    // BŁĘDNA OPCJA
+                    // ==================================
+
+                    default:
+
+                        Console.WriteLine();
+                        Console.WriteLine("Nieprawidłowa opcja.");
+
+                        break;
+                }
+
+                // Program nie zamyka się automatycznie
+                if (wybor != "x")
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Naciśnij ENTER, aby wrócić do menu...");
+                    Console.ReadLine();
+                }
+            }
+        }
+
+    }
+}
